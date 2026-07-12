@@ -238,14 +238,6 @@
     font-size: .9rem;
   }
 
-  /* ---------- estadísticas de github ---------- */
-  .stats-img{
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    display:block;
-    max-width: 100%;
-  }
-
   /* ---------- contacto ---------- */
   .contacto-links{ display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom: 2rem; font-size: .9rem; }
   form#contact-form{
@@ -446,21 +438,6 @@
       </div>
     </section>
 
-    <!-- ====== ESTADÍSTICAS DE GITHUB ======
-         Tarjeta generada por el servicio gratuito github-readme-stats
-         (no requiere API key). El parámetro theme se ajusta solo entre
-         "dark" y "default" según el tema activo, ver <script>. -->
-    <section id="stats-github">
-      <h2>Estadísticas de GitHub</h2>
-      <img
-        id="github-stats-img"
-        class="stats-img"
-        src="https://github-readme-stats.vercel.app/api?username=josefinadibujante-ux&show_icons=true&theme=dark"
-        alt="Estadísticas de GitHub de josefinadibujante-ux"
-        loading="lazy"
-      />
-    </section>
-
     <!-- ====== CONTACTO ====== -->
     <section id="contacto">
       <h2>Contacto</h2>
@@ -519,7 +496,6 @@
         <summary>Ver stack técnico ▾</summary>
         <ul>
           <li><strong>API pública de GitHub</strong> — trae los repositorios en vivo (sección Proyectos).</li>
-          <li><strong>github-readme-stats</strong> — genera la tarjeta de estadísticas de GitHub como imagen.</li>
           <li><strong>Google Sheets (publicado como CSV)</strong> — alimenta la misión, el estado actual y la experiencia.</li>
           <li><strong>EmailJS</strong> — envía el formulario de contacto sin necesidad de backend.</li>
           <li><strong>Calendly</strong> — widget para agendar una llamada de 15 minutos.</li>
@@ -551,21 +527,10 @@
       btn.textContent = '☀️ Tema';
     }
 
-    // Sincroniza el theme= de la tarjeta de github-readme-stats con el
-    // tema activo del sitio ("dark" u oscuro claro se llama "default" ahí).
-    function actualizarStatsGithub() {
-      const img = document.getElementById('github-stats-img');
-      if (!img) return;
-      const tema = root.classList.contains('light') ? 'default' : 'dark';
-      img.src = `https://github-readme-stats.vercel.app/api?username=josefinadibujante-ux&show_icons=true&theme=${tema}`;
-    }
-    actualizarStatsGithub();
-
     btn.addEventListener('click', () => {
       const esClaro = root.classList.toggle('light');
       btn.textContent = esClaro ? '☀️ Tema' : '🌙 Tema';
       localStorage.setItem('cv-theme', esClaro ? 'light' : 'dark');
-      actualizarStatsGithub();
     });
   })();
 
