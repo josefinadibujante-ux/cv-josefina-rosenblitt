@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Josefina Rosenblitt · CV</title>
+<meta name="description" content="Josefina Rosenblitt — Estudiante de Ingeniería Informática." />
+
+<!-- Tipografía monospace desde Google Fonts (con fallback a monospace del sistema si no carga) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  /* =======================================================
+     VARIABLES DE COLOR (tema oscuro por defecto, tema claro
+     se activa agregando la clase "light" al <html>)
+     ======================================================= */
+  :root{
+    --bg: #0d0f12;
+    --bg-elev: #16191d;
+    --border: #2a2f36;
+    --text: #e8e9eb;
+    --text-dim: #9aa1ab;
+    --accent: #7fd4a3;      /* verde suave, único acento de color */
+    --accent-dim: #4f7c63;
+    --danger: #d98282;
+    --link: #8fc8ff;
+  }
+  html.light{
+    --bg: #f5f5f2;
+    --bg-elev: #ffffff;
+    --border: #d8d8d3;
+    --text: #16181a;
+    --text-dim: #55595f;
+    --accent: #1f8b56;
+    --accent-dim: #a9d9bf;
+    --danger: #a13d3d;
+    --link: #1057a3;
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Consolas, 'Courier New', monospace;
+    line-height: 1.65;
+    transition: background .2s ease, color .2s ease;
+  }
+  a{ color: var(--link); }
+  img{ max-width: 100%; }
+  .wrap{
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  section{ padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type{ border-bottom: none; }
+  h2{
+    font-size: .95rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--accent);
+    margin: 0 0 1.5rem;
+  }
+  h2::before{ content: "// "; color: var(--text-dim); }
+  h3{ margin: 0 0 .35rem; font-size: 1.05rem; }
+  p{ margin: 0 0 1rem; color: var(--text-dim); }
+
+  /* ---------- barra superior: toggle de tema ---------- */
+  .topbar{
+    display:flex; justify-content:flex-end; align-items:center;
+    max-width: 860px; margin: 0 auto; padding: 1rem 1.25rem 0;
+  }
+  #theme-toggle{
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: .8rem;
+    padding: .5rem .9rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #theme-toggle:hover{ border-color: var(--accent); }
+
+  /* ---------- hero ---------- */
+  header.hero{ padding: 2.5rem 0 3rem; }
+  .hero h1{
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    margin: 0 0 .25rem;
+    letter-spacing: -.01em;
+  }
+  .hero .titulo{
+    color: var(--accent);
+    font-size: 1.05rem;
+    margin: 0 0 1.75rem;
+  }
+  /* Cursor parpadeante mientras se escribe el efecto de máquina de escribir */
+  .hero .titulo.escribiendo::after{
+    content: '▌';
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--accent);
+    animation: parpadeo 1s steps(1) infinite;
+  }
+  @keyframes parpadeo{ 50%{ opacity: 0; } }
+  .hero .historia{
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.1rem;
+  }
+  /* Bloque "En qué estoy ahora", llenado desde la pestaña Estado del Sheet.
+     Empieza oculto (hidden en el HTML) y solo se muestra si el fetch trae texto. */
+  .hero .estado-actual{
+    margin-top: 1rem;
+    font-size: .95rem;
+    color: var(--text-dim);
+  }
+  .hero .estado-actual strong{ color: var(--accent); }
+  .hero .datos{
+    margin-top: 1.75rem;
+    font-size: .85rem;
+    color: var(--text-dim);
+  }
+  .hero .datos a{ color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+  .hero .datos a:hover{ color: var(--accent); }
+
+  nav.subnav{
+    display:flex; flex-wrap: wrap; gap: .5rem 1.25rem;
+    margin-top: 1.75rem; font-size: .8rem;
+  }
+  nav.subnav a{ color: var(--text-dim); text-decoration: none; }
+  nav.subnav a:hover{ color: var(--accent); }
+
+  /* ---------- habilidades ---------- */
+  .skills{ display:flex; flex-wrap: wrap; gap: .6rem; }
+  .skills span{
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: .45rem .8rem;
+    border-radius: 6px;
+    font-size: .85rem;
+  }
+
+  /* ---------- formación ---------- */
+  .curso{
+    display:flex; justify-content:space-between; align-items:center;
+    gap: 1rem; padding: .9rem 0; border-bottom: 1px dashed var(--border);
+    flex-wrap: wrap;
+  }
+  .curso:last-child{ border-bottom: none; }
+  .curso-foto{
+    width: 72px; height: 52px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    flex-shrink: 0;
+  }
+  .curso-foto:hover{ border-color: var(--accent); }
+  .curso-info{ flex: 1; min-width: 180px; }
+  .curso .nombre{ color: var(--text); }
+  .curso .inst{ color: var(--text-dim); font-size: .85rem; }
+  .curso .fecha{ color: var(--text-dim); font-size: .8rem; white-space: nowrap; }
+
+  /* ---------- experiencia (mismo lenguaje visual que .curso) ---------- */
+  .experiencia-item{
+    padding: .9rem 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .experiencia-item:last-child{ border-bottom: none; }
+  .experiencia-item .curso{ border-bottom: none; padding: 0; }
+  .experiencia-logros{
+    margin: .6rem 0 0;
+    padding-left: 1.3rem;
+    color: var(--text-dim);
+    font-size: .85rem;
+  }
+  .experiencia-logros li{ margin-bottom: .3rem; }
+
+  /* ---------- lightbox de certificados ---------- */
+  .lightbox{
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.82);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem; cursor: zoom-out;
+  }
+  .lightbox[hidden]{ display: none; }
+  .lightbox img{
+    max-width: 100%; max-height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.5);
+  }
+
+  /* ---------- proyectos ---------- */
+  .grid-proyectos{
+    display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+    gap: 1rem;
+  }
+  .card{
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    position: relative;
+  }
+  .card.destacado{
+    border-color: var(--accent);
+    grid-column: 1 / -1;
+  }
+  .badge{
+    display:inline-block;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: .18rem .5rem;
+    border-radius: 4px;
+    margin-bottom: .5rem;
+  }
+  .card h3 a{ color: var(--text); text-decoration: none; }
+  .card h3 a:hover{ color: var(--accent); }
+  .card .desc{ font-size: .87rem; margin-bottom: .6rem; }
+  .card .meta{ font-size: .75rem; color: var(--text-dim); display:flex; gap: .9rem; flex-wrap: wrap; }
+  .card .meta a{ text-decoration:none; }
+  .estado-msg{
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    color: var(--text-dim);
+    font-size: .9rem;
+  }
+
+  /* ---------- estadísticas de github ---------- */
+  .stats-img{
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display:block;
+    max-width: 100%;
+  }
+
+  /* ---------- contacto ---------- */
+  .contacto-links{ display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom: 2rem; font-size: .9rem; }
+  form#contact-form{
+    display:grid; gap: .9rem; max-width: 480px;
+  }
+  form#contact-form label{ font-size: .8rem; color: var(--text-dim); display:block; margin-bottom:.3rem; }
+  form#contact-form input, form#contact-form textarea{
+    width:100%; background: var(--bg-elev); border:1px solid var(--border);
+    color: var(--text); font-family: inherit; font-size: .9rem;
+    padding: .6rem .7rem; border-radius: 6px;
+  }
+  form#contact-form textarea{ resize: vertical; min-height: 100px; }
+  form#contact-form button{
+    justify-self: start;
+    background: var(--accent); color: var(--bg); border: none;
+    font-family: inherit; font-weight: 700; font-size: .85rem;
+    padding: .7rem 1.4rem; border-radius: 6px; cursor: pointer;
+  }
+  form#contact-form button:disabled{ opacity: .6; cursor: default; }
+  #form-status{ font-size: .82rem; min-height: 1.2em; }
+  #form-status.ok{ color: var(--accent); }
+  #form-status.err{ color: var(--danger); }
+
+  .calendly-inline-widget{
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 280px;
+  }
+
+  /* ---------- footer / stack técnico ---------- */
+  footer{ padding: 2rem 0 3rem; }
+  footer details{
+    font-size: .8rem; color: var(--text-dim);
+  }
+  footer summary{
+    cursor: pointer; color: var(--text-dim); list-style: none;
+  }
+  footer summary::-webkit-details-marker{ display:none; }
+  footer summary:hover{ color: var(--accent); }
+  footer ul{ margin: .8rem 0; padding-left: 1.2rem; }
+  footer li{ margin-bottom: .4rem; }
+  footer .firma{ margin-top: 1.5rem; font-size: .75rem; color: var(--text-dim); opacity: .7; }
+</style>
+</head>
+<body>
+
+  <!-- ====== BOTÓN DE TEMA CLARO/OSCURO ====== -->
+  <div class="topbar">
+    <button id="theme-toggle" aria-label="Cambiar tema">🌙 Tema</button>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ====== HERO: nombre, título y motivación (protagonista del CV) ====== -->
+    <header class="hero">
+      <h1>Josefina Rosenblitt</h1>
+      <p class="titulo">Estudiante de Ingeniería Informática · Analista de datos de Ingenierasmasunab </p>
+
+      <p class="historia">
+        Estudio ingeniería informática, con foco en datos y automatización.
+
+        Actualmente analizo encuestas para la asociación de mujeres de mi universidad
+        y uso Claude para automatizar reportes.
+      </p>
+
+      <!-- Bloque "En qué estoy ahora": se llena desde la pestaña Estado del
+           Google Sheet (ver <script>). Si el fetch falla o viene vacío,
+           se queda oculto (atributo hidden), sin mostrar hueco ni error. -->
+      <p class="estado-actual" id="estado-actual" hidden></p>
+
+      <div class="datos">
+        Ingeniería Informática — Universidad Andrés Bello ·
+        <a href="mailto:j.rosenblittbarrera@uandresbello.edu">j.rosenblittbarrera@uandresbello.edu</a>
+      </div>
+
+      <nav class="subnav">
+        <a href="#habilidades">Habilidades</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#formacion">Formación</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <!-- ====== HABILIDADES ====== -->
+    <section id="habilidades">
+      <h2>Habilidades</h2>
+      <div class="skills">
+        <span>Python</span>
+        <span>HTML/CSS</span>
+        <span>JavaScript básico</span>
+        <span>Análisis de datos (Excel/Google Sheets, estadística básica)</span>
+        <span>Prompting y diseño de prompts para IA</span>
+        <span>Automatización con Claude y MCP</span>
+        <span>Git/GitHub</span>
+      </div>
+    </section>
+
+    <!-- ====== EXPERIENCIA ======
+         Se llena dinámicamente desde la pestaña "Experiencia" del Google
+         Sheet (ver <script>, bloque "CONTENIDO DESDE GOOGLE SHEETS").
+         Mismo lenguaje visual que Formación (clases .curso-info/.nombre/
+         .inst/.fecha), más una lista de logros por debajo de cada una.
+         Si el fetch falla, muestra el mismo aviso .estado-msg que usamos
+         para los proyectos de GitHub. -->
+    <section id="experiencia">
+      <h2>Experiencia</h2>
+      <div id="experiencia-lista">
+        <p class="estado-msg">Cargando experiencia…</p>
+      </div>
+    </section>
+
+    <!-- ====== FORMACIÓN / CURSOS ======
+         Cada curso incluye una miniatura del certificado (carpeta img/).
+         Al hacer clic se abre en grande con el lightbox definido en el <script>. -->
+    <section id="formacion">
+      <h2>Formación y cursos</h2>
+
+      <div class="curso">
+        <img class="curso-foto" src="img/curso-claude-code.jpg" alt="Certificado del curso de Claude Code (Platzi)" />
+        <div class="curso-info">
+          <div class="nombre">Claude Code</div>
+          <div class="inst">Platzi</div>
+        </div>
+        <div class="fecha">Julio 2026 · 8 h</div>
+      </div>
+
+      <div class="curso">
+        <img class="curso-foto" src="img/curso-html.jpg" alt="Certificado del curso de HTML (Platzi)" />
+        <div class="curso-info">
+          <div class="nombre">Curso de HTML</div>
+          <div class="inst">Platzi</div>
+        </div>
+        <div class="fecha">Abril 2026 · 15 h</div>
+      </div>
+
+      <div class="curso">
+        <img class="curso-foto" src="img/curso-prompting.jpg" alt="Certificado del curso Prompting responsable (Santander Open Academy)" />
+        <div class="curso-info">
+          <div class="nombre">Prompting responsable: maximiza la IA en tu negocio</div>
+          <div class="inst">Santander Open Academy</div>
+        </div>
+        <div class="fecha">Febrero 2026 · 8 h</div>
+      </div>
+
+      <div class="curso">
+        <img class="curso-foto" src="img/curso-python.jpg" alt="Certificado del curso de Python (Santander Open Academy)" />
+        <div class="curso-info">
+          <div class="nombre">Python</div>
+          <div class="inst">Santander Open Academy</div>
+        </div>
+        <div class="fecha">Diciembre 2025 · 8 h</div>
+      </div>
+
+      <div class="curso">
+        <img class="curso-foto" src="img/curso-anticoncepcion.jpg" alt="Certificado del taller Anticoncepción basada en evidencia (Fundación IntegraSex Chile)" />
+        <div class="curso-info">
+          <div class="nombre">Anticoncepción basada en evidencia: métodos, eficacia y elección</div>
+          <div class="inst">Fundación IntegraSex Chile</div>
+        </div>
+        <div class="fecha">Marzo 2026 · 3 h</div>
+      </div>
+    </section>
+
+    <!-- Lightbox: se muestra en grande la foto del certificado al hacer clic -->
+    <div id="lightbox" class="lightbox" hidden>
+      <img id="lightbox-img" src="" alt="" />
+    </div>
+
+    <!-- ====== PROYECTOS ======
+         Los repos de GitHub se traen en vivo con JS más abajo (ver <script>).
+         Acá solo van los 2 proyectos fijos que siempre se muestran. -->
+    <section id="proyectos">
+      <h2>Proyectos</h2>
+
+      <div class="grid-proyectos" id="proyectos-fijos">
+        <div class="card">
+          <h3>Dashboard de encuestas automatizado</h3>
+          <p class="desc">
+            Análisis de encuestas de una asociación universitaria de mujeres,
+            usando Claude, MCP y Google Drive para automatizar reportes.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Este mismo CV</h3>
+          <p class="desc">
+            Sitio de currículum interactivo construido con HTML, CSS y JavaScript,
+            usando APIs gratuitas (GitHub, EmailJS, Calendly).
+          </p>
+        </div>
+      </div>
+
+      <!-- Acá se insertan los repos públicos traídos desde la API de GitHub -->
+      <div class="grid-proyectos" id="proyectos-github" style="margin-top:1rem;">
+        <p class="estado-msg">Cargando repositorios de GitHub…</p>
+      </div>
+    </section>
+
+    <!-- ====== ESTADÍSTICAS DE GITHUB ======
+         Tarjeta generada por el servicio gratuito github-readme-stats
+         (no requiere API key). El parámetro theme se ajusta solo entre
+         "dark" y "default" según el tema activo, ver <script>. -->
+    <section id="stats-github">
+      <h2>Estadísticas de GitHub</h2>
+      <img
+        id="github-stats-img"
+        class="stats-img"
+        src="https://github-readme-stats.vercel.app/api?username=josefinadibujante-ux&show_icons=true&theme=dark"
+        alt="Estadísticas de GitHub de josefinadibujante-ux"
+        loading="lazy"
+      />
+    </section>
+
+    <!-- ====== CONTACTO ====== -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+
+      <div class="contacto-links">
+        <a href="https://www.linkedin.com/in/josefina-rosenblitt-6828a526a/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/josefinadibujante-ux" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:j.rosenblittbarrera@uandresbello.edu">j.rosenblittbarrera@uandresbello.edu</a>
+      </div>
+
+      <!-- Formulario de contacto con EmailJS (plan gratuito, 200 correos/mes).
+           Pasos para activarlo:
+           1. Crea una cuenta gratis en https://www.emailjs.com/
+           2. Conecta tu Gmail como "Email Service" y copia el SERVICE_ID.
+           3. Crea un "Email Template" con variables {{from_name}}, {{from_email}}, {{message}}
+              y copia el TEMPLATE_ID.
+           4. En "Account > General" copia tu PUBLIC_KEY.
+           5. Pega los 3 valores en las constantes EMAILJS_* del <script> más abajo. -->
+      <form id="contact-form">
+        <div>
+          <label for="from_name">Nombre</label>
+          <input type="text" id="from_name" name="from_name" required />
+        </div>
+        <div>
+          <label for="from_email">Tu email</label>
+          <input type="email" id="from_email" name="from_email" required />
+        </div>
+        <div>
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit">Enviar mensaje</button>
+        <p id="form-status"></p>
+      </form>
+
+      <!-- Widget de Calendly para agendar una llamada de 15 minutos.
+           Pasos para activarlo:
+           1. Crea una cuenta gratis en https://calendly.com/
+           2. Crea un evento de 15 minutos y copia su URL pública
+              (algo como https://calendly.com/tu-usuario/15min).
+           3. Reemplaza REEMPLAZAR_CON_TU_URL_DE_CALENDLY más abajo por esa URL. -->
+      <div
+        class="calendly-inline-widget"
+        data-url="REEMPLAZAR_CON_TU_URL_DE_CALENDLY"
+        style="min-width:280px; height:630px;">
+      </div>
+      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    </section>
+
+  </div>
+
+  <!-- ====== FOOTER: stack técnico, plegado por defecto ====== -->
+  <footer>
+    <div class="wrap">
+      <details>
+        <summary>Ver stack técnico ▾</summary>
+        <ul>
+          <li><strong>API pública de GitHub</strong> — trae los repositorios en vivo (sección Proyectos).</li>
+          <li><strong>github-readme-stats</strong> — genera la tarjeta de estadísticas de GitHub como imagen.</li>
+          <li><strong>Google Sheets (publicado como CSV)</strong> — alimenta la misión, el estado actual y la experiencia.</li>
+          <li><strong>EmailJS</strong> — envía el formulario de contacto sin necesidad de backend.</li>
+          <li><strong>Calendly</strong> — widget para agendar una llamada de 15 minutos.</li>
+        </ul>
+        <p class="firma">
+          Código de este CV:
+          <a href="https://github.com/josefinadibujante-ux/cv-josefina-rosenblitt" target="_blank" rel="noopener">
+            github.com/josefinadibujante-ux/cv-josefina-rosenblitt
+          </a>
+          <!-- Si al subir el proyecto usas otro nombre de repositorio, actualiza este link. -->
+        </p>
+      </details>
+    </div>
+  </footer>
+
+<script>
+  /* =======================================================
+     TEMA CLARO / OSCURO
+     Guarda la preferencia del usuario en localStorage para
+     que se mantenga entre visitas.
+     ======================================================= */
+  (function () {
+    const root = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    const guardado = localStorage.getItem('cv-theme');
+
+    if (guardado === 'light') {
+      root.classList.add('light');
+      btn.textContent = '☀️ Tema';
+    }
+
+    // Sincroniza el theme= de la tarjeta de github-readme-stats con el
+    // tema activo del sitio ("dark" u oscuro claro se llama "default" ahí).
+    function actualizarStatsGithub() {
+      const img = document.getElementById('github-stats-img');
+      if (!img) return;
+      const tema = root.classList.contains('light') ? 'default' : 'dark';
+      img.src = `https://github-readme-stats.vercel.app/api?username=josefinadibujante-ux&show_icons=true&theme=${tema}`;
+    }
+    actualizarStatsGithub();
+
+    btn.addEventListener('click', () => {
+      const esClaro = root.classList.toggle('light');
+      btn.textContent = esClaro ? '☀️ Tema' : '🌙 Tema';
+      localStorage.setItem('cv-theme', esClaro ? 'light' : 'dark');
+      actualizarStatsGithub();
+    });
+  })();
+
+  /* =======================================================
+     EFECTO DE MÁQUINA DE ESCRIBIR EN EL SUBTÍTULO DEL HERO
+     Escribe el texto de .hero .titulo carácter por carácter
+     al cargar la página. Toma el texto directamente del HTML,
+     así que si lo cambias ahí, el efecto se ajusta solo.
+     ======================================================= */
+  (function () {
+    const el = document.querySelector('.hero .titulo');
+    if (!el) return;
+
+    const textoCompleto = el.textContent.trim();
+    const VELOCIDAD_MS = 45; // velocidad moderada y legible
+
+    el.textContent = '';
+    el.classList.add('escribiendo');
+
+    let i = 0;
+    function escribirSiguiente() {
+      if (i < textoCompleto.length) {
+        el.textContent += textoCompleto[i];
+        i++;
+        setTimeout(escribirSiguiente, VELOCIDAD_MS);
+      } else {
+        el.classList.remove('escribiendo');
+      }
+    }
+    escribirSiguiente();
+  })();
+
+  /* =======================================================
+     LIGHTBOX DE CERTIFICADOS
+     Al hacer clic en la miniatura de un curso, muestra la
+     foto del certificado en grande. Se cierra clickeando
+     de nuevo o con la tecla Escape.
+     ======================================================= */
+  (function () {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.curso-foto').forEach((foto) => {
+      foto.addEventListener('click', () => {
+        lightboxImg.src = foto.src;
+        lightboxImg.alt = foto.alt;
+        lightbox.hidden = false;
+      });
+    });
+
+    function cerrar() {
+      lightbox.hidden = true;
+      lightboxImg.src = '';
+    }
+
+    lightbox.addEventListener('click', cerrar);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') cerrar();
+    });
+  })();
+
+  /* =======================================================
+     CONTENIDO DESDE GOOGLE SHEETS (Misión / Estado / Experiencia)
+
+     Josefina mantiene UNA Google Sheet con 3 pestañas: "Mision",
+     "Estado" y "Experiencia". Cada pestaña se publica por separado
+     como CSV (Archivo → Compartir → Publicar en la web → elegir la
+     hoja → formato CSV) y su URL se pega en las 3 constantes de
+     abajo. Al cargar la página se piden las 3 en paralelo, sin
+     bloquear el resto del contenido; cada una tiene su propio
+     manejo de error para no romper nada si alguna falla.
+
+     ⚠️ IMPORTANTE: una hoja "publicada en la web" queda visible para
+     cualquiera que tenga el link, aunque no aparezca en buscadores.
+     No pongas ahí datos sensibles de compañeras de la asociación de
+     mujeres (nombres, encuestas, etc.) — solo tu propio contenido de CV.
+     ======================================================= */
+  (function () {
+    // Pega acá las 3 URLs de "Publicar en la web" en formato CSV:
+    const URL_CSV_MISION = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFCMkvzKCigqgHre8zTTh_VgC-AbDNEdFWytD_z6vwmlxFB6o1mEozRZwffDBsfOg5MzSbNiVPjn7I/pub?output=csv';
+    const URL_CSV_ESTADO = 'REEMPLAZAR_CON_URL_CSV_PESTANA_ESTADO';
+    const URL_CSV_EXPERIENCIA = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQs6jan9t1euTc1GoUzox-kJOXBnBfyR8BJbK9WB1A7fyDKDAfN4H3ZBAGlWp0ALhuct_0yvPwO6TY8/pub?output=csv';
+
+    // Parser simple de CSV: soporta comillas dobles (para celdas con
+    // comas o saltos de línea adentro) y separa filas/columnas.
+    function parsearCSV(texto) {
+      const filas = [];
+      let fila = [];
+      let celda = '';
+      let entreComillas = false;
+
+      for (let i = 0; i < texto.length; i++) {
+        const c = texto[i];
+        const siguiente = texto[i + 1];
+
+        if (entreComillas) {
+          if (c === '"' && siguiente === '"') { celda += '"'; i++; }
+          else if (c === '"') { entreComillas = false; }
+          else { celda += c; }
+        } else {
+          if (c === '"') entreComillas = true;
+          else if (c === ',') { fila.push(celda); celda = ''; }
+          else if (c === '\n') { fila.push(celda); filas.push(fila); fila = []; celda = ''; }
+          else if (c === '\r') { /* ignorar, \n lo maneja arriba */ }
+          else celda += c;
+        }
+      }
+      if (celda !== '' || fila.length) { fila.push(celda); filas.push(fila); }
+      return filas.filter((f) => f.some((c) => c.trim() !== ''));
+    }
+
+    function obtenerCSV(url) {
+      return fetch(url).then((res) => {
+        if (!res.ok) throw new Error('No se pudo obtener el CSV: ' + url);
+        return res.text();
+      }).then(parsearCSV);
+    }
+
+    // ---- Pestaña "Mision": una sola celda de texto (celda A1) ----
+    // Reemplaza .hero .historia. Si falla, se deja el texto estático
+    // que ya está escrito en el HTML como respaldo.
+    if (!URL_CSV_MISION.startsWith('REEMPLAZAR')) {
+      obtenerCSV(URL_CSV_MISION)
+        .then((filas) => {
+          const texto = filas[0] && filas[0][0] ? filas[0][0].trim() : '';
+          if (texto) {
+            document.querySelector('.hero .historia').textContent = texto;
+          }
+        })
+        .catch(() => { /* se mantiene el texto estático de respaldo */ });
+    }
+
+    // ---- Pestaña "Estado": una sola celda de texto (celda A1) ----
+    // Llena el bloque "En qué estoy ahora" debajo de la historia.
+    // Si falla o viene vacío, el bloque se queda oculto (no se toca).
+    if (!URL_CSV_ESTADO.startsWith('REEMPLAZAR')) {
+      const bloqueEstado = document.getElementById('estado-actual');
+      obtenerCSV(URL_CSV_ESTADO)
+        .then((filas) => {
+          const texto = filas[0] && filas[0][0] ? filas[0][0].trim() : '';
+          if (texto && bloqueEstado) {
+            bloqueEstado.innerHTML = '';
+            const etiqueta = document.createElement('strong');
+            etiqueta.textContent = 'En qué estoy ahora: ';
+            bloqueEstado.appendChild(etiqueta);
+            bloqueEstado.appendChild(document.createTextNode(texto));
+            bloqueEstado.hidden = false;
+          }
+        })
+        .catch(() => { /* se mantiene oculto */ });
+    }
+
+    // ---- Pestaña "Experiencia": tabla con encabezado
+    // puesto,organizacion,fecha_inicio,fecha_fin,logros
+    // (logros separados por "|"). Arma la sección #experiencia.
+    const contenedorExp = document.getElementById('experiencia-lista');
+    if (URL_CSV_EXPERIENCIA.startsWith('REEMPLAZAR')) {
+      mostrarErrorExperiencia();
+    } else {
+      obtenerCSV(URL_CSV_EXPERIENCIA)
+        .then((filas) => {
+          const [encabezado, ...resto] = filas;
+          if (!encabezado || !resto.length) throw new Error('Hoja de experiencia vacía');
+
+          const columnas = encabezado.map((h) => h.trim().toLowerCase());
+          const experiencias = resto.map((f) => {
+            const obj = {};
+            columnas.forEach((col, i) => { obj[col] = (f[i] || '').trim(); });
+            return obj;
+          });
+
+          // Más reciente primero. Recomendado usar fechas tipo "2026-03"
+          // en la hoja para que el orden sea siempre correcto.
+          experiencias.sort((a, b) => {
+            const fa = Date.parse(a.fecha_inicio);
+            const fb = Date.parse(b.fecha_inicio);
+            return (isNaN(fb) ? -Infinity : fb) - (isNaN(fa) ? -Infinity : fa);
+          });
+
+          contenedorExp.innerHTML = '';
+          experiencias.forEach((exp) => contenedorExp.appendChild(crearItemExperiencia(exp)));
+        })
+        .catch(mostrarErrorExperiencia);
+    }
+
+    function crearItemExperiencia(exp) {
+      const item = document.createElement('div');
+      item.className = 'experiencia-item';
+
+      const cabecera = document.createElement('div');
+      cabecera.className = 'curso';
+
+      const info = document.createElement('div');
+      info.className = 'curso-info';
+      const nombre = document.createElement('div');
+      nombre.className = 'nombre';
+      nombre.textContent = exp.puesto || '';
+      const inst = document.createElement('div');
+      inst.className = 'inst';
+      inst.textContent = exp.organizacion || '';
+      info.append(nombre, inst);
+
+      const fecha = document.createElement('div');
+      fecha.className = 'fecha';
+      fecha.textContent = `${exp.fecha_inicio || ''} – ${exp.fecha_fin || 'Actualidad'}`;
+
+      cabecera.append(info, fecha);
+
+      const lista = document.createElement('ul');
+      lista.className = 'experiencia-logros';
+      (exp.logros || '')
+        .split('|')
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .forEach((logro) => {
+          const li = document.createElement('li');
+          li.textContent = logro;
+          lista.appendChild(li);
+        });
+
+      item.append(cabecera, lista);
+      return item;
+    }
+
+    function mostrarErrorExperiencia() {
+      contenedorExp.innerHTML = '';
+      const p = document.createElement('p');
+      p.className = 'estado-msg';
+      p.textContent = 'No se pudo cargar la experiencia en este momento.';
+      contenedorExp.appendChild(p);
+    }
+  })();
+
+  /* =======================================================
+     PROYECTOS DESDE LA API PÚBLICA DE GITHUB
+     Trae los repos públicos, los ordena por fecha de
+     actualización y destaca el proyecto web principal con
+     una tarjeta más grande.
+     Si la API falla o no hay repos públicos, muestra un
+     mensaje amable en vez de romper la página.
+     ======================================================= */
+  (function () {
+    const USUARIO_GITHUB = 'josefinadibujante-ux';
+    const contenedor = document.getElementById('proyectos-github');
+
+    // Repos que no queremos mostrar en el CV (proyectos viejos/de otro club)
+    const REPOS_EXCLUIDOS = [
+      'Centro-de-alumnos-medicina-ucentral',
+      'ciclo-femenino',
+      'vive-el-ciclo',
+    ];
+
+    // Nombre exacto del repo a destacar como proyecto principal
+    const REPO_DESTACADO = 'ingenieria-mujeres-app';
+
+    fetch(`https://api.github.com/users/${USUARIO_GITHUB}/repos?per_page=100`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Respuesta no válida de la API de GitHub');
+        return res.json();
+      })
+      .then((repos) => {
+        // Filtra forks y los repos excluidos manualmente
+        const propios = repos.filter(
+          (r) => !r.fork && !REPOS_EXCLUIDOS.includes(r.name)
+        );
+
+        if (!propios.length) {
+          mostrarMensajeVacio();
+          return;
+        }
+
+        // Orden por fecha de última actualización (más reciente primero)
+        propios.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        contenedor.innerHTML = '';
+        propios.forEach((repo) => {
+          contenedor.appendChild(crearTarjeta(repo, repo.name === REPO_DESTACADO));
+        });
+      })
+      .catch(() => {
+        mostrarMensajeVacio();
+      });
+
+    function crearTarjeta(repo, esDestacado) {
+      const div = document.createElement('div');
+      div.className = 'card' + (esDestacado ? ' destacado' : '');
+      div.innerHTML = `
+        ${esDestacado ? '<span class="badge">Proyecto destacado</span>' : ''}
+        <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
+        <p class="desc">${repo.description ? repo.description : 'Sin descripción.'}</p>
+        <div class="meta">
+          ${repo.language ? `<span>${repo.language}</span>` : ''}
+          <span>★ ${repo.stargazers_count}</span>
+          <span>Actualizado: ${new Date(repo.updated_at).toLocaleDateString('es-CL')}</span>
+        </div>
+      `;
+      return div;
+    }
+
+    function mostrarMensajeVacio() {
+      // Nota para Josefina: si esto aparece, revisa que tus repos de GitHub
+      // estén configurados como públicos (no privados) en la configuración
+      // de cada repositorio, ya que la API pública solo devuelve repos públicos.
+      contenedor.innerHTML = `
+        <p class="estado-msg">
+          No se pudieron cargar los repositorios de GitHub en este momento.
+          Puedes ver el perfil directamente en
+          <a href="https://github.com/${USUARIO_GITHUB}" target="_blank" rel="noopener">github.com/${USUARIO_GITHUB}</a>.
+        </p>
+      `;
+    }
+  })();
+</script>
+
+<!-- SDK de EmailJS (plan gratuito) para enviar el formulario de contacto sin backend -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  /* =======================================================
+     FORMULARIO DE CONTACTO CON EMAILJS
+     Reemplaza estas 3 constantes con tus datos gratuitos de
+     https://www.emailjs.com/ (ver instrucciones en el HTML
+     del formulario, más arriba).
+     ======================================================= */
+  const EMAILJS_PUBLIC_KEY = 'REEMPLAZAR_CON_TU_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID = 'REEMPLAZAR_CON_TU_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'REEMPLAZAR_CON_TU_TEMPLATE_ID';
+
+  (function () {
+    if (window.emailjs) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    const boton = form.querySelector('button');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (EMAILJS_PUBLIC_KEY.startsWith('REEMPLAZAR')) {
+        status.textContent = 'El formulario aún no está configurado con EmailJS (ver comentarios en el código).';
+        status.className = 'err';
+        return;
+      }
+
+      boton.disabled = true;
+      status.textContent = 'Enviando...';
+      status.className = '';
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+        .then(() => {
+          status.textContent = '¡Mensaje enviado! Te responderé pronto.';
+          status.className = 'ok';
+          form.reset();
+        })
+        .catch(() => {
+          status.textContent = 'Hubo un error al enviar. Intenta de nuevo o escribe directo a j.rosenblittbarrera@uandresbello.edu.';
+          status.className = 'err';
+        })
+        .finally(() => {
+          boton.disabled = false;
+        });
+    });
+  })();
+</script>
+
+</body>
+</html>
